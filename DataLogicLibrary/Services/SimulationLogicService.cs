@@ -34,9 +34,6 @@ namespace DataLogicLibrary.Services
 
         public StatusDTO PerformAction(int userInput, StatusDTO currentStatus)
         {
-            if (userInput == 6)
-                return currentStatus;
-
             switch (userInput)
             {
                 case 1:
