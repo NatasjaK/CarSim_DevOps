@@ -13,6 +13,21 @@ namespace DataLogicLibrary.DirectionStrategies
     {
         public StatusDTO Execute(StatusDTO currentStatus)
         {
+            currentStatus.CardinalDirection = currentStatus.CardinalDirection switch
+            {
+                CardinalDirection.North => CardinalDirection.East,
+                CardinalDirection.East => CardinalDirection.South,
+                CardinalDirection.South => CardinalDirection.West,
+                CardinalDirection.West => CardinalDirection.North,
+                _ => currentStatus.CardinalDirection
+            };
+
+            currentStatus.MovementAction = MovementAction.Right;
+            return currentStatus;
+        }
+
+        /*public StatusDTO Execute(StatusDTO currentStatus)
+        {
             CardinalDirection newDirection;
 
             if (currentStatus.MovementAction != MovementAction.Backward)
@@ -60,6 +75,6 @@ namespace DataLogicLibrary.DirectionStrategies
             currentStatus.CardinalDirection = newDirection;
             currentStatus.MovementAction = MovementAction.Right;
             return currentStatus;
-        }
+        }*/
     }
 }
