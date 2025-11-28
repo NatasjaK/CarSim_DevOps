@@ -160,9 +160,51 @@ namespace CarSimulator.Tests
             Assert.Equal(CardinalDirection.East, result.CardinalDirection);
             Assert.Equal(MovementAction.Forward, result.MovementAction);
         }
+
+        [Fact]
+        public void PerformAction_DriveForward_ShouldNotChangeDirection_WhenGasIsZero()
+        {
+            // Arrange
+            var dummyDirectionContext = new DummyDirectionContext();
+            var resolver = CreateRealResolver();
+            var service = new SimulationLogicService(dummyDirectionContext, resolver);
+            var status = new StatusDTO
+            {
+                CardinalDirection = CardinalDirection.North,
+                GasValue = 0,
+                EnergyValue = 10
+            };
+
+            // Act
+            var result = service.PerformAction(3, status); // 3 = Drive forward
+
+            // Assert 
+            Assert.Equal(CardinalDirection.North, result.CardinalDirection);
+        }
+
+        [Fact]
+        public void PerformAction_DriveForward_ShouldNotChangeDirection_WhenEnergyIsZero()
+        {
+            // Arrange
+            var dummyDirectionContext = new DummyDirectionContext();
+            var resolver = CreateRealResolver();
+            var service = new SimulationLogicService(dummyDirectionContext, resolver);
+            var status = new StatusDTO
+            {
+                CardinalDirection = CardinalDirection.North,
+                GasValue = 10,
+                EnergyValue = 0
+            };
+
+            // Act
+            var result = service.PerformAction(3, status); // 3 = Drive forward
+
+            // Assert 
+            Assert.Equal(CardinalDirection.North, result.CardinalDirection);
+        }
     }
 
-    public class DummyDirectionContext : IDirectionContext
+        public class DummyDirectionContext : IDirectionContext
     {
         private IDirectionStrategy? _strategy;
 
